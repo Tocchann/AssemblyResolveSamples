@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" DefaultTargets="CopyNativeBinaries" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--本来は、AnyCPU環境でプラットフォームに依存したアセンブリを参照する際にMSB3270を抑制するためにつけるので、対象プロジェクト側で定義する-->
+  <!--サンプルとして見やすくするためにわざとここに定義-->
+  <PropertyGroup Condition="'$(OutputType)'=='Exe' And '$(Platform)' == 'AnyCPU'">
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
+  <!--最終出力となるexeの場合のみプラットフォーム依存アセンブリのコピーを行う。DLL形式のプロジェクトを対象とする場合は、一工夫すること。-->
+  <Target Name="CopyNativeBinaries" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(OutputType)'=='Exe'">
+    <!--C++/CLI の $(Configuration) は Debug, Release, DebugCore, ReleaseCore になっている-->
+    <PropertyGroup>
+      <AppendConfiguration Condition="'$(_FrameworkIdentifierForImplicitDefine)' != ''">Core</AppendConfiguration>
+    </PropertyGroup>
+    <ItemGroup>
+      <!--このターゲットのあるフォルダにbinフォルダを配置することで、任意のプロジェクトを対象にコピーができるようになっている-->
+      <NativeBinary Include="$(MSBuildThisFileDirectory)bin\$(Configuration)$(AppendConfiguration)\**\*.dll" />
+      <NativeBinary Include="$(MSBuildThisFileDirectory)bin\$(Configuration)$(AppendConfiguration)\**\*.pdb" />
+    </ItemGroup>
+    <Message Text="NativeBinary=@(NativeBinary)" />
+    <Copy SourceFiles="@(NativeBinary)" DestinationFiles="$(OutDir)%(RecursiveDir)%(Filename)%(Extension)" SkipUnchangedFiles="true">
+      <Output TaskParameter="DestinationFiles" ItemName="FileWrites" />
+    </Copy>
+  </Target>
+</Project>
