@@ -6,6 +6,8 @@ Debug.WriteLine( "Main()" );
 Console.WriteLine( "Main()" );
 using( var loader = new AssemblyResolveLoader() )
 {
+	Debug.WriteLine( "Before CallTest()" );
+	Console.WriteLine( "Before CallTest()" );
 	CallTest();
 }
 static void CallTest()
