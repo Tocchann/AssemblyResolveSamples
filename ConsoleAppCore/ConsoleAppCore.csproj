@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\AssemblyResolveLoader\AssemblyResolveLoader.csproj" />
-    <ProjectReference Include="..\CppCliDll\CppCliDll.vcxproj" />
+    <ProjectReference Include="..\CppCliDll\CppCliDll.vcxproj">
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
 </Project>

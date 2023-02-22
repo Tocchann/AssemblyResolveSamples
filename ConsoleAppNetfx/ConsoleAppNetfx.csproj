@@ -59,6 +59,7 @@
     <ProjectReference Include="..\CppCliDll\CppCliDll.vcxproj">
       <Project>{011dc5c4-7dae-4980-af61-cc76d382cfa0}</Project>
       <Name>CppCliDll</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
