@@ -19,8 +19,7 @@
   </Target>
   <!--最終出力となるexeの場合のみプラットフォーム依存アセンブリのコピーを行う。DLL形式のプロジェクトを対象とする場合は、一工夫すること。-->
   <!--Inputs="@(NativeBinary)" Outputs="$(OutDir)%(RecursiveDir)%(Filename)%(Extension)"-->
-  <Target Name="CopyNativeBinaries" AfterTargets="PrepareCopyNativeBinaries" Condition="'$(OutputType)'=='Exe'"
-          Inputs="@(NativeBinary)" Outputs="$(OutDir)%(RecursiveDir)%(Filename)%(Extension)">
+  <Target Name="CopyNativeBinaries" AfterTargets="PrepareCopyNativeBinaries" Condition="'$(OutputType)'=='Exe'">
     <Copy SourceFiles="@(NativeBinary)" DestinationFiles="$(OutDir)%(RecursiveDir)%(Filename)%(Extension)" SkipUnchangedFiles="true">
       <Output TaskParameter="DestinationFiles" ItemName="FileWrites" />
     </Copy>

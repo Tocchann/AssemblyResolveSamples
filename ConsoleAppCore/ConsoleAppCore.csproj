@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AssemblyResolveLoader\AssemblyResolveLoader.csproj" />
-    <ProjectReference Include="..\CppCliDll\CppCliDll.vcxproj">
+    <ProjectReference Include="..\CppCliDll\CppCliDllCore.vcxproj">
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
