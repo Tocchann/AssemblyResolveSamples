@@ -8,6 +8,7 @@
     <Platforms>AnyCPU</Platforms>
     <SignAssembly>False</SignAssembly>
   </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\AssemblyResolveLoader\AssemblyResolveLoader.csproj" />
     <ProjectReference Include="..\CppCliDll\CppCliDll.vcxproj">

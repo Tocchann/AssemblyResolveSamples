@@ -19,25 +19,26 @@ namespace DotNetLab.Utility
 	{
 		public AssemblyResolveLoader()
 		{
-			Debug.WriteLine( $"AssemblyResolveLoader()" );
+			Trace.WriteLine( $"AssemblyResolveLoader()" );
 			Console.WriteLine( $"AssemblyResolveLoader()" );
 
-			Debug.WriteLine( $"AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;" );
+			Trace.WriteLine( $"AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;" );
 			Console.WriteLine( $"AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;" );
-			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
+			AppDomain.CurrentDomain.AssemblyResolve += PreCall_AssemblyResolve;
 		}
+
 		private bool disposedValue;
 		protected virtual void Dispose( bool disposing )
 		{
-			Debug.WriteLine( $"AssemblyResolveLoader.Dispose( {disposing} )" );
+			Trace.WriteLine( $"AssemblyResolveLoader.Dispose( {disposing} )" );
 			Console.WriteLine( $"AssemblyResolveLoader.Dispose( {disposing} )" );
 			if( !disposedValue )
 			{
 				if( disposing )
 				{
-					Debug.WriteLine( $"AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolve;" );
+					Trace.WriteLine( $"AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolve;" );
 					Console.WriteLine( $"AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolve;" );
-					AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolve;
+					AppDomain.CurrentDomain.AssemblyResolve -= PreCall_AssemblyResolve;
 				}
 				disposedValue = true;
 			}
@@ -47,52 +48,36 @@ namespace DotNetLab.Utility
 			Dispose( disposing: true );
 			GC.SuppressFinalize( this );
 		}
-#if NET
-		private System.Reflection.Assembly? AssemblyResolve( object? sender, ResolveEventArgs args )
-#else
-		private System.Reflection.Assembly AssemblyResolve( object sender, ResolveEventArgs args )
-#endif
+		// ステップ実行した時にわかりやすくロードのタイミングを見せるために用意したダミーハンドラ
+		private Assembly PreCall_AssemblyResolve( object sender, ResolveEventArgs args )
 		{
-			Debug.WriteLine( $"AssemblyResolve( args.Name={args.Name} )" );
+			//'ConsoleAppCore.exe'( CoreCLR: clrhost ): 'System.Runtime.InteropServices.RuntimeInformation.dll' が読み込まれました。
+			return AssemblyResolve( sender, args );
+		}
+		private Assembly AssemblyResolve( object sender, ResolveEventArgs args )
+		{
+			Trace.WriteLine( $"AssemblyResolve( args.Name={args.Name} )" );
 			Console.WriteLine( $"AssemblyResolve( args.Name={args.Name} )" );
-			// あり得ないはずではあるが、AppDomain の呼び出し以外は反応しないようにする
-			if( sender is AppDomain appDomain )
+			var assemblyName = new AssemblyName( args.Name );
+			Trace.WriteLine( $"RuntimeInformation.OSArchitecture={RuntimeInformation.OSArchitecture}" );
+			Console.WriteLine( $"RuntimeInformation.OSArchitecture={RuntimeInformation.OSArchitecture}" );
+			Trace.WriteLine( $"RuntimeInformation.ProcessArchitecture={RuntimeInformation.ProcessArchitecture}" );
+			Console.WriteLine( $"RuntimeInformation.ProcessArchitecture={RuntimeInformation.ProcessArchitecture}" );
+			// 位置は決め打ち。ファイル名はアセンブリ名と同じという前提にしている
+			var appendDir = RuntimeInformation.ProcessArchitecture switch
 			{
-				var assemblyName = new AssemblyName( args.Name );
-				Console.WriteLine( $"RuntimeInformation.OSArchitecture={RuntimeInformation.OSArchitecture}" );
-				Console.WriteLine( $"RuntimeInformation.ProcessArchitecture={RuntimeInformation.ProcessArchitecture}" );
-				// 位置は決め打ち。ファイル名はアセンブリ名と同じという前提にしている(名前を変えるとかはやらない)
-#if NET
-				// .NET Core の場合(将来増える可能性がある)は、不明なアーキテクチャは例外をだして開発時に解決できるようにする。
-				// OSは考慮していないのでその点は注意が必要。
-				var appendDir = RuntimeInformation.ProcessArchitecture switch
-				{
-					Architecture.X86 => "x86",
-					Architecture.X64 => "x64",
-					Architecture.Arm64 => "ARM64",
-					Architecture.Arm => "ARM",
-					_ => throw new PlatformNotSupportedException( $"Unknown ProcessArchitecture({RuntimeInformation.ProcessArchitecture})" ),
-				};
-#else
-				// .NET Framework の場合(今後減ることはあっても増えることはない)は、デフォルトはx86環境とみなして、x64, ARM64 を場合分けする。
-				var appendDir = "x86";
-				switch( RuntimeInformation.ProcessArchitecture )
-				{
-					case Architecture.X64:
-						appendDir = "x64";
-						break;
-					case Architecture.Arm64:
-						appendDir = "ARM64";
-						break;
-				}
-#endif
-				var targetPath = Path.Combine( appendDir, assemblyName.Name + ".dll" );
-				Debug.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
-				Console.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
-				var assembly = Assembly.LoadFrom( targetPath ); // これで見つからなければ、エラー
-				return assembly;
-			}
-			return null;
+				Architecture.X86 => "x86",
+				Architecture.X64 => "x64",
+				Architecture.Arm64 => "ARM64",
+				Architecture.Arm => "ARM",
+				_ => throw new PlatformNotSupportedException( $"Unknown ProcessArchitecture({RuntimeInformation.ProcessArchitecture})" ),
+			};
+			// 相対パス参照でよい
+			var targetPath = Path.Combine( appendDir, assemblyName.Name + ".dll" );
+			Trace.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
+			Console.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
+			var assembly = Assembly.LoadFrom( targetPath );
+			return assembly;
 		}
 	}
 }
