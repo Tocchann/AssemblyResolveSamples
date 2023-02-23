@@ -3,7 +3,7 @@
 ## アジェンダ
 - はじめに
 - .NET アプリがアセンブリを読み込むタイミング
-- .NET で動的に読み込むためのトリック
+- .NET で動的にアセンブリを読み込む簡単な方法
 - 動作中のモードに沿ったプラットフォームの選択方法
 - ビルド時に適切なバイナリを適切な場所に配置する方法
 - まとめ
@@ -12,47 +12,36 @@
 
 ### 今回のプロジェクト構成
 
-- CppCliDll
-    - .NET Framework 4.8.1
-        - VS2022 のデフォルトは 4.7.2(VC++のバージョンに依存)
-    - ARM64, x86(Win32), x64 の３種類のプラットフォームに対応
-- CppCliDllCore
-    - .NET 6(未指定は不可)
-    - ARM, ARM64, x86(Win32), x64 の４種類のプラットフォームに対応
-- AssemblyResolveLoader
-    - .NET Standard 2.0
-    - Any CPU
-- ConsoleAppNetfx
-    - .NET Framework 4.8.1
-    - Any CPU
-- ConsoleAppCore
-    - .NET 6
-    - Any CPU
+| ProjectName | Framework | Version | Any CPU | ARM | ARM64 | Win32 | x64 |
+|---|---|---|---|---|---|---|---|
+| CppCliDll | .NET Framework | 4.8.1 | × | × | ○ | ○ | ○ | 
+| CppCliDllCore | .NET | 6 | × | ○ | ○ | ○ | ○ | 
+| AssemblyResolveLoader | .NET Standard | 2.0 | ○ | × |× |× |× |
+| ConsoleAppNetfx | .NET Framework | 4.8.1 | ○ | × |× |× |× |
+| ConsoleAppCore | .NET | 6 | ○ | × |× |× |× |
 
 ## .NET アプリがアセンブリを読み込むタイミング
 
 - .NET アプリは、そのメソッドが呼ばれるタイミングではじめてロードされる
     - 呼び出そうとするまでロードされない
-- 一度ロードしたらずっとロードしっぱなし
-    - AppDomain を解放するまでアンロードされない
+- 実際に見てみましょう！
 
 ## .NET で動的にアセンブリを読み込む簡単な方法
 
 - アセンブリを動的に選択するにはどうすればいいか？
-    - AppDomain.AssemblyResolve イベントで対象アセンブリのロード処理を行う
-
-
+    - AppDomain.AssemblyResolve イベントを利用する
+        - ロードしようとしたアセンブリが見つからない時に呼ばれるイベント
+    - 実行状況(RuntimeInformation.ProcessArchitecture)を見てロード対象を決める
+        - アプリケーション構築時に配置構成を決めておく必要がある
 
 ## 動作中のモードに沿ったプラットフォームの選択方法
 
 適切なプラットフォームを選択するにはどうするか？
 
-1. RuntimeInformation.ProcessArchitecture
-2. IntPtr.Size で判定する(.NET Framework 4.7.0までの場合(4.6.2を含む))
-
-```
-.NET Framework には、ARM(32) プラットフォームは存在しないので共用プロジェクトを作る場合は注意すること
-```
+1. RuntimeInformation.ProcessArchitecture を参照
+    - ARMも含めた判定が可能
+2. IntPtr.Size で判定する
+    - 32bitプロセスか、64bitプロセスかしかわからない
 
 ## ビルド時に適切なバイナリを適切な場所に配置する方法
 
@@ -63,9 +52,5 @@
 ## まとめ
 
 今更だけど、まだまだ使いたい動的なアセンブリのロード振り分け。いかがだったでしょうか？
+
 今回は C++/CLI を対象にしていますが、C#のアセンブリでも基本的には同様です。
-
-- 汎用的に見える理由
-- 実際に汎用化する場合に注意するべきこと
-- C#(VBも可)がプラットフォーム依存の場合はどうするのか？
-
