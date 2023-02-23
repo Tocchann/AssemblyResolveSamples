@@ -1,6 +1,6 @@
 ﻿using CppCliDll;
-using System;
 using DotNetLab.Utility;
+using System;
 using System.Diagnostics;
 
 namespace ConsoleApp
