@@ -254,11 +254,13 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)\$(PlatformShortName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <ManagedAssembly>true</ManagedAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)\$(PlatformShortName)\</IntDir>
+    <ManagedAssembly>true</ManagedAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugCore|ARM64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
@@ -274,11 +276,13 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)\$(PlatformShortName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <ManagedAssembly>true</ManagedAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)\$(PlatformShortName)\</IntDir>
+    <ManagedAssembly>true</ManagedAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseCore|ARM64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
@@ -294,6 +298,7 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)\$(PlatformShortName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <ManagedAssembly>true</ManagedAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugCore|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
@@ -304,6 +309,7 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)\$(PlatformShortName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <ManagedAssembly>true</ManagedAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseCore|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
@@ -314,6 +320,7 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)\$(PlatformShortName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <ManagedAssembly>true</ManagedAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugCore|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
@@ -324,6 +331,7 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)\$(PlatformShortName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <ManagedAssembly>true</ManagedAssembly>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseCore|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
@@ -590,6 +598,7 @@
     <ClInclude Include="CppManagedClass.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppManagedClass.cpp" />
@@ -663,6 +672,9 @@
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CppCliDll.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
