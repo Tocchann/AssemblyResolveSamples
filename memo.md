@@ -12,13 +12,13 @@
 
 ### 今回のプロジェクト構成
 
-| ProjectName | Framework | Version | Any CPU | ARM | ARM64 | Win32 | x64 |
-|---|---|---|---|---|---|---|---|
-| CppCliDll | .NET Framework | 4.8.1 | × | × | ○ | ○ | ○ | 
-| CppCliDllCore | .NET | 6 | × | ○ | ○ | ○ | ○ | 
-| AssemblyResolveLoader | .NET Standard | 2.0 | ○ | × |× |× |× |
-| ConsoleAppNetfx | .NET Framework | 4.8.1 | ○ | × |× |× |× |
-| ConsoleAppCore | .NET | 6 | ○ | × |× |× |× |
+| ProjectName | Language | Type | Framework | Version | Any CPU | ARM | ARM64 | Win32 | x64 |
+|---|---|---|---|---|---|---|---|---|---|
+| AssemblyResolveLoader | C# | dll | .NET Standard | 2.0 | ○ | × |× |× |× |
+| ConsoleAppCore | C# | exe | .NET | 6 | ○ | × |× |× |× |
+| ConsoleAppNetfx | C# | exe | .NET Framework | 4.8.1 | ○ | × |× |× |× |
+| CppCliDll | C++/CLI | dll | .NET Framework | 4.8.1 | × | × | ○ | ○ | ○ | 
+| CppCliDllCore | C++/CLI | dll | .NET | 6 | × | ○ | ○ | ○ | ○ | 
 
 ## .NET アプリがアセンブリを読み込むタイミング
 
