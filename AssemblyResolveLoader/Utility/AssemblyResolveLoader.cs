@@ -43,6 +43,19 @@ namespace DotNetLab.Utility
 			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 		}
 
+		private Assembly AssemblyResolve( object sender, ResolveEventArgs args )
+		{
+			var appDomain = sender as AppDomain;
+			Trace.WriteLine( $"AssemblyResolve( sender={appDomain?.FriendlyName}, args={args.Name} )" );
+			Console.WriteLine( $"AssemblyResolve( sender={appDomain?.FriendlyName}, args={args.Name} )" );
+			var assemblyName = new AssemblyName( args.Name );
+			var targetPath = Path.Combine( ArchitectureDependDirectory, assemblyName.Name + ".dll" );
+			Trace.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
+			Console.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
+			var assembly = Assembly.LoadFrom( targetPath );
+			return assembly;
+		}
+		#region Dispose() の実装
 		private bool disposedValue;
 		protected virtual void Dispose( bool disposing )
 		{
@@ -62,17 +75,6 @@ namespace DotNetLab.Utility
 			Dispose( true );
 			GC.SuppressFinalize( this );
 		}
-		private Assembly AssemblyResolve( object sender, ResolveEventArgs args )
-		{
-			var appDomain = sender as AppDomain;
-			Trace.WriteLine( $"AssemblyResolve( sender={appDomain?.FriendlyName}, args={args.Name} )" );
-			Console.WriteLine( $"AssemblyResolve( sender={appDomain?.FriendlyName}, args={args.Name} )" );
-			var assemblyName = new AssemblyName( args.Name );
-			var targetPath = Path.Combine( ArchitectureDependDirectory, assemblyName.Name + ".dll" );
-			Trace.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
-			Console.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
-			var assembly = Assembly.LoadFrom( targetPath );
-			return assembly;
-		}
+		#endregion
 	}
 }

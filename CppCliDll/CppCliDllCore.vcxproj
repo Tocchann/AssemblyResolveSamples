@@ -132,6 +132,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)Core\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)Core\$(PlatformShortName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)Core\$(PlatformShortName)\</OutDir>
@@ -140,6 +141,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)Core\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)Core\$(PlatformShortName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)Core\$(PlatformShortName)\</OutDir>
@@ -148,6 +150,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)Core\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)Core\$(PlatformShortName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)Core\$(PlatformShortName)\</OutDir>
@@ -156,6 +159,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <OutDir>$(SolutionDir)bin\$(Configuration)Core\$(PlatformShortName)\</OutDir>
     <IntDir>obj\$(Configuration)Core\$(PlatformShortName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <OutDir>$(SolutionDir)bin\$(Configuration)Core\$(PlatformShortName)\</OutDir>

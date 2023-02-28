@@ -18,5 +18,8 @@
     <ProjectReference Include="..\CppCliDll\CppCliDllCore.vcxproj">
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\CsDllCore\CsDllCore.csproj">
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
 </Project>

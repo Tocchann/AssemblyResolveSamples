@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>ARM32;ARM64;x64;x86</Platforms>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo IF '$(Platform)' EQU 'ARM32' COPY $(TargetDir)$(TargetName).* $(SolutionDir)bin\$(Configuration)Core\ARM\&#xD;&#xA;IF '$(Platform)' EQU 'ARM32' COPY $(TargetDir)$(TargetName).* $(SolutionDir)bin\$(Configuration)Core\ARM\&#xD;&#xA;echo IF '$(Platform)' NEQ 'ARM32' COPY $(TargetDir)$(TargetName).* $(SolutionDir)bin\$(Configuration)Core\$(Platform)\&#xD;&#xA;IF '$(Platform)' NEQ 'ARM32' COPY $(TargetDir)$(TargetName).* $(SolutionDir)bin\$(Configuration)Core\$(Platform)\&#xD;&#xA;" />
+  </Target>
+
+  <ItemGroup>
+    <Compile Include="..\CsDll\CsClass.cs" Link="CsClass.cs" />
+  </ItemGroup>
+
+</Project>
