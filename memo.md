@@ -10,15 +10,24 @@
 
 ## はじめに
 
+今までのプロセスアーキテクチャは、32bitか、64bitかの区別だけでよかったものが、いつのまにか ARM も区別する必要が出ていました。
+
+Windowsの世界だけでみても、ちょっと前までと違って単純な２択から３～４択という状況です。
+
+ということで、久しぶりに今すぐ使えるテクニックとして、動的にアセンブリをロードしてくるということをやってみようと思います。
+
+単に動的ロードするだけじゃなく、実際のプロジェクト構成などもいろいろ組み合わせてみました。
+
+
 ### 今回のプロジェクト構成
 
 | ProjectName | Language | Type | Framework | Version | Any CPU | ARM | ARM64 | Win32 | x64 |
 |---|---|---|---|---|---|---|---|---|---|
 | AssemblyResolveLoader | C# | dll | .NET Standard | 2.0 | ○ | × |× |× |× |
-| ConsoleAppCore | C# | exe | .NET | 6 | ○ | × |× |× |× |
+| ConsoleAppCore | C# | exe | .NET | 6.0 | ○ | × |× |× |× |
 | ConsoleAppNetfx | C# | exe | .NET Framework | 4.8.1 | ○ | × |× |× |× |
-| CppCliDll | C++/CLI | dll | .NET Framework | 4.8.1 | × | × | ○ | ○ | ○ | 
-| CppCliDllCore | C++/CLI | dll | .NET | 6 | × | ○ | ○ | ○ | ○ | 
+| CppCliDll | C++/CLI | dll | .NET Framework | 4.8.1 | △ | × | ○ | ○ | ○ | 
+| CppCliDllCore | C++/CLI | dll | .NET | 6.0 | × | ○ | ○ | ○ | ○ | 
 
 ## .NET アプリがアセンブリを読み込むタイミング
 
