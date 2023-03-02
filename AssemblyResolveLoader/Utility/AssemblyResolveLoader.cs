@@ -24,8 +24,12 @@ namespace DotNetLab.Utility
 			Trace.WriteLine( $"AssemblyResolveLoader()" );
 			Console.WriteLine( $"AssemblyResolveLoader()" );
 
+			Trace.WriteLine( $"RuntimeInformation.FrameworkDescription={RuntimeInformation.FrameworkDescription}" );
+			Console.WriteLine( $"RuntimeInformation.FrameworkDescription={RuntimeInformation.FrameworkDescription}" );
 			Trace.WriteLine( $"RuntimeInformation.OSArchitecture={RuntimeInformation.OSArchitecture}" );
 			Console.WriteLine( $"RuntimeInformation.OSArchitecture={RuntimeInformation.OSArchitecture}" );
+			Trace.WriteLine( $"RuntimeInformation.OSDescription={RuntimeInformation.OSDescription}" );
+			Console.WriteLine( $"RuntimeInformation.OSDescription={RuntimeInformation.OSDescription}" );
 			Trace.WriteLine( $"RuntimeInformation.ProcessArchitecture={RuntimeInformation.ProcessArchitecture}" );
 			Console.WriteLine( $"RuntimeInformation.ProcessArchitecture={RuntimeInformation.ProcessArchitecture}" );
 
