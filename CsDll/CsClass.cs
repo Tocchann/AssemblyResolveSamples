@@ -11,8 +11,8 @@ namespace CsDll
 	{
 		public CsClass()
 		{
-			Trace.WriteLine( "CsClass.CsClass()" );
-			Console.WriteLine( "CsClass.CsClass()" );
+			Trace.WriteLine( $"CsClass.CsClass():AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName={AppDomain.CurrentDomain?.SetupInformation?.TargetFrameworkName}, IntPtr.Size={IntPtr.Size}" );
+			Console.WriteLine( $"CsClass.CsClass():AppDomain.CurrentDomain.SetupInformation.TargetFrameworkName={AppDomain.CurrentDomain?.SetupInformation?.TargetFrameworkName}, IntPtr.Size={IntPtr.Size}" );
 		}
 		public string Name 
 		{
