@@ -1,17 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Project ToolsVersion="4.0" DefaultTargets="CopyNativeBinaries" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="ResolveDependAssembly" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--AnyCPUアセンブリとプロジェクト依存アセンブリとのミスマッチ warning を非表示にするためのプロパティを設定-->
   <!--参照モジュールを含むプロジェクトじゃない限り通常ここでは定義しない-->
   <PropertyGroup Condition="'$(OutputType)|$(Platform)'=='Exe|AnyCPU'">
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <AppendConfiguration Condition="'$(_FrameworkIdentifierForImplicitDefine)' != ''">Core</AppendConfiguration>
   </PropertyGroup>
-  <Target Name="PrepareCopyNativeBinaries" AfterTargets="CopyFilesToOutputDirectory" Condition="'$(OutputType)'=='Exe'">
+  <ItemGroup Condition="'$(OutputType)|$(Platform)'=='Exe|AnyCPU'">
+    <Content Include="$(MSBuildThisFileDirectory)bin\$(Configuration)$(AppendConfiguration)\**\*.dll">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>false</Pack>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)bin\$(Configuration)$(AppendConfiguration)\**\*.pdb">
+      <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>false</Pack>
+    </Content>
+  </ItemGroup>
+  <Target Name="ResolveDependAssembly" AfterTargets="ResolveReferences" Condition="'$(OutputType)|$(Platform)'=='Exe|AnyCPU'">
     <!--C++/CLI の $(Configuration) は Debug, Release, DebugCore, ReleaseCore になっている-->
-    <PropertyGroup>
+    <!--<PropertyGroup>
       <AppendConfiguration Condition="'$(_FrameworkIdentifierForImplicitDefine)' != ''">Core</AppendConfiguration>
-    </PropertyGroup>
+    </PropertyGroup>-->
+    <!--このターゲットのあるフォルダにbinフォルダを配置することで、任意のプロジェクトを対象にコピーができるようになっている-->
+    <!--<ItemGroup>
+      <Content Include="$(MSBuildThisFileDirectory)bin\$(Configuration)$(AppendConfiguration)\**\*.dll">
+        <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <Pack>false</Pack>
+      </Content>
+      <Content Include="$(MSBuildThisFileDirectory)bin\$(Configuration)$(AppendConfiguration)\**\*.pdb">
+        <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <Pack>false</Pack>
+      </Content>
+    </ItemGroup>-->
     <ItemGroup>
-      <!--このターゲットのあるフォルダにbinフォルダを配置することで、任意のプロジェクトを対象にコピーができるようになっている-->
       <NativeBinary Include="$(MSBuildThisFileDirectory)bin\$(Configuration)$(AppendConfiguration)\**\*.dll" />
       <NativeBinary Include="$(MSBuildThisFileDirectory)bin\$(Configuration)$(AppendConfiguration)\**\*.pdb" />
     </ItemGroup>
@@ -19,9 +44,9 @@
   </Target>
   <!--最終出力となるexeの場合のみプラットフォーム依存アセンブリのコピーを行う。DLL形式のプロジェクトを対象とする場合は、一工夫すること。-->
   <!--Inputs="@(NativeBinary)" Outputs="$(OutDir)%(RecursiveDir)%(Filename)%(Extension)"-->
-  <Target Name="CopyNativeBinaries" AfterTargets="PrepareCopyNativeBinaries" Condition="'$(OutputType)'=='Exe'">
+  <!--<Target Name="CopyNativeBinaries" AfterTargets="PrepareCopyNativeBinaries" Condition="'$(OutputType)'=='Exe'">
     <Copy SourceFiles="@(NativeBinary)" DestinationFiles="$(OutDir)%(RecursiveDir)%(Filename)%(Extension)" SkipUnchangedFiles="true">
       <Output TaskParameter="DestinationFiles" ItemName="FileWrites" />
     </Copy>
-  </Target>
+  </Target>-->
 </Project>
