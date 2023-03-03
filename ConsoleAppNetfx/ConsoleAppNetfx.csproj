@@ -60,12 +60,12 @@
     <ProjectReference Include="..\CppCliDll\CppCliDll.vcxproj">
       <Project>{011dc5c4-7dae-4980-af61-cc76d382cfa0}</Project>
       <Name>CppCliDll</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\CsDll\CsDll.csproj">
       <Project>{4e224abd-f53a-43cf-bc2a-54945c4b51fc}</Project>
       <Name>CsDll</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
