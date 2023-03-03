@@ -23,7 +23,6 @@ namespace ConsoleApp
 				CallTestCs();
 			}
 		}
-
 		private static void CallTest()
 		{
 			Trace.WriteLine( "CallTest()" );
