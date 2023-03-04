@@ -3,6 +3,9 @@ using CsDll;
 using DotNetLab.Utility;
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace ConsoleApp
 {
@@ -23,6 +26,7 @@ namespace ConsoleApp
 				CallTestCs();
 			}
 		}
+
 		private static void CallTest()
 		{
 			Trace.WriteLine( "CallTest()" );
