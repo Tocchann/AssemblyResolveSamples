@@ -52,7 +52,10 @@ namespace DotNetLab.Utility
 					break;
 				}
 			}
-
+			if( ArchitectureDependDirectory == null )
+			{
+				throw new DirectoryNotFoundException( "アセンブリロードパスが見つかりません。" );
+			}
 			Trace.WriteLine( $"ArchitectureDependDirectory={ArchitectureDependDirectory}" );
 			Console.WriteLine( $"ArchitectureDependDirectory={ArchitectureDependDirectory}" );
 			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
