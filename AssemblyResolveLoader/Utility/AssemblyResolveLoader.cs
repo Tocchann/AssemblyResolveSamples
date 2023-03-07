@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -42,24 +43,39 @@ namespace DotNetLab.Utility
 				Architecture.Arm => "ARM",
 				_ => throw new PlatformNotSupportedException( $"Unknown ProcessArchitecture({RuntimeInformation.ProcessArchitecture})" ),
 			};
-			// 本当ならこの手の解決策としては、IHostEnvironment などを使って解決するのが一番安定する(環境依存部分は全部吸収してくれるため)
-			Trace.WriteLine( $"Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )}" );
-			Console.WriteLine( $"Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )}" );
-			Trace.WriteLine( $"Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )}" );
-			Console.WriteLine( $"Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )}" );
-			Trace.WriteLine( $"AppDomain.CurrentDomain.BaseDirectory={AppDomain.CurrentDomain.BaseDirectory}" );
-			Console.WriteLine( $"AppDomain.CurrentDomain.BaseDirectory={AppDomain.CurrentDomain.BaseDirectory}" );
-			// GetEntryAssembly() は、COM.DLL のような場合はnullを返すため、汎用的なライブラリとしては使えない
-			var baseDir = Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location );
-			if( string.IsNullOrEmpty( baseDir ) )
+			// 理想的には IHostEnvironment.ContentRootPath を使うのが良い
+			foreach( var dependDir in EnumBaseDirectories( appendDir ) )
 			{
-				baseDir = Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location );
+				if( Directory.Exists( dependDir ) )
+				{
+					ArchitectureDependDirectory = dependDir;
+					break;
+				}
 			}
-			ArchitectureDependDirectory = Path.Combine( baseDir, appendDir );
 
 			Trace.WriteLine( $"ArchitectureDependDirectory={ArchitectureDependDirectory}" );
 			Console.WriteLine( $"ArchitectureDependDirectory={ArchitectureDependDirectory}" );
 			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
+		}
+		private static IEnumerable<string> EnumBaseDirectories( string appendDir )
+		{
+			Trace.WriteLine( $"Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )}" );
+			Console.WriteLine( $"Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )}" );
+			var dir = Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location );
+			if( !string.IsNullOrEmpty( dir ) )
+			{
+				yield return Path.Combine( dir, appendDir );
+			}
+			Trace.WriteLine( $"Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )}" );
+			Console.WriteLine( $"Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )}" );
+			dir = Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location );
+			if( !string.IsNullOrEmpty( dir ) )
+			{
+				yield return Path.Combine( dir, appendDir );
+			}
+			Trace.WriteLine( $"AppDomain.CurrentDomain.BaseDirectory={AppDomain.CurrentDomain.BaseDirectory}" );
+			Console.WriteLine( $"AppDomain.CurrentDomain.BaseDirectory={AppDomain.CurrentDomain.BaseDirectory}" );
+			yield return Path.Combine( AppDomain.CurrentDomain.BaseDirectory, appendDir );
 		}
 
 		private Assembly AssemblyResolve( object sender, ResolveEventArgs args )
