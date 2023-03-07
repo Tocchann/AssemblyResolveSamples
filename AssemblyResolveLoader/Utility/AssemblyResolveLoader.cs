@@ -19,7 +19,7 @@ namespace DotNetLab.Utility
 		/// プロセスアーキテクチャに依存したモジュールを格納しているディレクトリ
 		/// </summary>
 		private string ArchitectureDependDirectory { get; }
-		public AssemblyResolveLoader()
+		public AssemblyResolveLoader(/*IHostEnvironment env*/)
 		{
 			Trace.WriteLine( $"AssemblyResolveLoader()" );
 			Console.WriteLine( $"AssemblyResolveLoader()" );
@@ -34,7 +34,7 @@ namespace DotNetLab.Utility
 			Console.WriteLine( $"RuntimeInformation.ProcessArchitecture={RuntimeInformation.ProcessArchitecture}" );
 
 			// 実行中にプロセスアーキテクチャが変わることはない
-			ArchitectureDependDirectory = RuntimeInformation.ProcessArchitecture switch
+			var appendDir = RuntimeInformation.ProcessArchitecture switch
 			{
 				Architecture.X86 => "x86",
 				Architecture.X64 => "x64",
@@ -42,6 +42,21 @@ namespace DotNetLab.Utility
 				Architecture.Arm => "ARM",
 				_ => throw new PlatformNotSupportedException( $"Unknown ProcessArchitecture({RuntimeInformation.ProcessArchitecture})" ),
 			};
+			// 本当ならこの手の解決策としては、IHostEnvironment などを使って解決するのが一番安定する(環境依存部分は全部吸収してくれるため)
+			Trace.WriteLine( $"Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )}" );
+			Console.WriteLine( $"Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )}" );
+			Trace.WriteLine( $"Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )}" );
+			Console.WriteLine( $"Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )}" );
+			Trace.WriteLine( $"AppDomain.CurrentDomain.BaseDirectory={AppDomain.CurrentDomain.BaseDirectory}" );
+			Console.WriteLine( $"AppDomain.CurrentDomain.BaseDirectory={AppDomain.CurrentDomain.BaseDirectory}" );
+			// GetEntryAssembly() は、COM.DLL のような場合はnullを返すため、汎用的なライブラリとしては使えない
+			var baseDir = Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location );
+			if( string.IsNullOrEmpty( baseDir ) )
+			{
+				baseDir = Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location );
+			}
+			ArchitectureDependDirectory = Path.Combine( baseDir, appendDir );
+
 			Trace.WriteLine( $"ArchitectureDependDirectory={ArchitectureDependDirectory}" );
 			Console.WriteLine( $"ArchitectureDependDirectory={ArchitectureDependDirectory}" );
 			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;

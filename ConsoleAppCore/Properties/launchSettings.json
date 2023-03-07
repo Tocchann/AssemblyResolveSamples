@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleAppCore": {
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
+    }
+  }
+}
