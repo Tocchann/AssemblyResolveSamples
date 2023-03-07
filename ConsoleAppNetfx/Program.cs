@@ -1,5 +1,4 @@
-﻿using ConsoleAppCore;
-using CppCliDll;
+﻿using CppCliDll;
 using CsDll;
 using DotNetLab.Utility;
 using System;
@@ -17,8 +16,6 @@ namespace ConsoleApp
 			Trace.WriteLine( "Main()" );
 			Console.WriteLine( "Main()" );
 
-			//C:\Projects\Sources\Tocchann\AssemblyResolveSamples\ConsoleAppCore\bin\Debug\net6.0
-			//Directory.SetCurrentDirectory( ".." );
 			Trace.WriteLine( Directory.GetCurrentDirectory() );
 			Console.WriteLine( Directory.GetCurrentDirectory() );
 
@@ -36,7 +33,7 @@ namespace ConsoleApp
 				Console.WriteLine( "Before CallTestCs()" );
 				CallTestCs();
 			}
-			//CoreOnly.CoreOnlyMethod();
+			//ConsoleAppCore.CoreOnly.CoreOnlyMethod();
 		}
 
 		private static void CallTest()
