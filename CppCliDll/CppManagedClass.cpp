@@ -7,8 +7,8 @@ namespace CppCliDll
 {
 CppManagedClass::CppManagedClass()
 {
-	Trace::WriteLine( L"CppCliDll::CppManagedClass::CppManagedClass()" );
-	Console::WriteLine( L"CppCliDll::CppManagedClass::CppManagedClass()" );
+	Trace::WriteLine(String::Format(L"CppCliDll::CppManagedClass::CppManagedClass(), IntPtr.Size={0}", IntPtr::Size));
+	Console::WriteLine(String::Format(L"CppCliDll::CppManagedClass::CppManagedClass(), IntPtr.Size={0}", IntPtr::Size));
 }
 CppManagedClass::~CppManagedClass()
 {
