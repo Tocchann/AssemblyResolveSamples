@@ -33,7 +33,9 @@ namespace ConsoleApp
 				Console.WriteLine( "Before CallTestCs()" );
 				CallTestCs();
 			}
-			//ConsoleAppCore.CoreOnly.CoreOnlyMethod();
+#if NET
+			ConsoleAppCore.CoreOnly.CoreOnlyMethod();
+#endif
 		}
 
 		private static void CallTest()
