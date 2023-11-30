@@ -23,16 +23,11 @@ namespace DotNetLab.Utility
 		public AssemblyResolveLoader(/*IHostEnvironment env*/)
 		{
 			Trace.WriteLine( $"AssemblyResolveLoader()" );
-			Console.WriteLine( $"AssemblyResolveLoader()" );
 
 			Trace.WriteLine( $"RuntimeInformation.FrameworkDescription={RuntimeInformation.FrameworkDescription}" );
-			Console.WriteLine( $"RuntimeInformation.FrameworkDescription={RuntimeInformation.FrameworkDescription}" );
 			Trace.WriteLine( $"RuntimeInformation.OSArchitecture={RuntimeInformation.OSArchitecture}" );
-			Console.WriteLine( $"RuntimeInformation.OSArchitecture={RuntimeInformation.OSArchitecture}" );
 			Trace.WriteLine( $"RuntimeInformation.OSDescription={RuntimeInformation.OSDescription}" );
-			Console.WriteLine( $"RuntimeInformation.OSDescription={RuntimeInformation.OSDescription}" );
 			Trace.WriteLine( $"RuntimeInformation.ProcessArchitecture={RuntimeInformation.ProcessArchitecture}" );
-			Console.WriteLine( $"RuntimeInformation.ProcessArchitecture={RuntimeInformation.ProcessArchitecture}" );
 
 			// 実行中にプロセスアーキテクチャが変わることはない
 			var appendDir = RuntimeInformation.ProcessArchitecture switch
@@ -57,27 +52,23 @@ namespace DotNetLab.Utility
 				throw new DirectoryNotFoundException( "アセンブリロードパスが見つかりません。" );
 			}
 			Trace.WriteLine( $"ArchitectureDependDirectory={ArchitectureDependDirectory}" );
-			Console.WriteLine( $"ArchitectureDependDirectory={ArchitectureDependDirectory}" );
 			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 		}
 		private static IEnumerable<string> EnumBaseDirectories( string appendDir )
 		{
 			Trace.WriteLine( $"Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )}" );
-			Console.WriteLine( $"Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location )}" );
 			var dir = Path.GetDirectoryName( Assembly.GetEntryAssembly()?.Location );
 			if( !string.IsNullOrEmpty( dir ) )
 			{
 				yield return Path.Combine( dir, appendDir );
 			}
 			Trace.WriteLine( $"Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )}" );
-			Console.WriteLine( $"Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )={Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location )}" );
 			dir = Path.GetDirectoryName( Assembly.GetExecutingAssembly()?.Location );
 			if( !string.IsNullOrEmpty( dir ) )
 			{
 				yield return Path.Combine( dir, appendDir );
 			}
 			Trace.WriteLine( $"AppDomain.CurrentDomain.BaseDirectory={AppDomain.CurrentDomain.BaseDirectory}" );
-			Console.WriteLine( $"AppDomain.CurrentDomain.BaseDirectory={AppDomain.CurrentDomain.BaseDirectory}" );
 			yield return Path.Combine( AppDomain.CurrentDomain.BaseDirectory, appendDir );
 		}
 
@@ -85,11 +76,9 @@ namespace DotNetLab.Utility
 		{
 			var appDomain = sender as AppDomain;
 			Trace.WriteLine( $"AssemblyResolve( sender={appDomain?.FriendlyName}, args={args.Name} )" );
-			Console.WriteLine( $"AssemblyResolve( sender={appDomain?.FriendlyName}, args={args.Name} )" );
 			var assemblyName = new AssemblyName( args.Name );
 			var targetPath = Path.Combine( ArchitectureDependDirectory, assemblyName.Name + ".dll" );
 			Trace.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
-			Console.WriteLine( $"Assembly.LoadFrom( {targetPath} )" );
 			var assembly = Assembly.LoadFrom( targetPath );
 			return assembly;
 		}
@@ -98,7 +87,6 @@ namespace DotNetLab.Utility
 		protected virtual void Dispose( bool disposing )
 		{
 			Trace.WriteLine( $"AssemblyResolveLoader.Dispose( {disposing} )" );
-			Console.WriteLine( $"AssemblyResolveLoader.Dispose( {disposing} )" );
 			if( !disposedValue )
 			{
 				if( disposing )

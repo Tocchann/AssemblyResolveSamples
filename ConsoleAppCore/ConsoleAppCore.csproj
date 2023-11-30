@@ -10,7 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\ConsoleAppNetfx\NativeMethods.cs" Link="NativeMethods.cs" />
     <Compile Include="..\ConsoleAppNetfx\Program.cs" Link="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\bin\$(Configuration)\CppDll32.dll" Link="CppDll32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\bin\$(Configuration)\CppDll64.dll" Link="CppDll64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

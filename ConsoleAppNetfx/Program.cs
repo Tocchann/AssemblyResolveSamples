@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace ConsoleApp
@@ -13,49 +14,47 @@ namespace ConsoleApp
 	{
 		static void Main( string[] args )
 		{
+			Trace.Listeners.Add( new ConsoleTraceListener() );
 			Trace.WriteLine( "Main()" );
-			Console.WriteLine( "Main()" );
 
 			Trace.WriteLine( Directory.GetCurrentDirectory() );
-			Console.WriteLine( Directory.GetCurrentDirectory() );
 
 			using( var loader = new AssemblyResolveLoader() )
 			{
 				Trace.WriteLine( "Before CallTest()" );
-				Console.WriteLine( "Before CallTest()" );
 				CallTest();
 
 				Trace.WriteLine( "Second time CallTest()" );
-				Console.WriteLine( "Second time CallTest()" );
 				CallTest();
 
 				Trace.WriteLine( "Before CallTestCs()" );
-				Console.WriteLine( "Before CallTestCs()" );
 				CallTestCs();
 			}
-#if NET
+			CallTestCppDll();
 			ConsoleAppCore.CoreOnly.CoreOnlyMethod();
-#endif
+		}
+
+		private static void CallTestCppDll()
+		{
+			Trace.WriteLine( "CallTestCppDll()" );
+			var result = NativeMethods.GetMaxValue( 10, 20 );
+			Trace.WriteLine( $"NativeMethods.GetMaxValue( 10, 20 )={result}" );
 		}
 
 		private static void CallTest()
 		{
 			Trace.WriteLine( "CallTest()" );
-			Console.WriteLine( "CallTest()" );
 			var cppClass = new CppManagedClass();
 			var result = cppClass.Add( 1, 2 );
 			Trace.WriteLine( $"CppManagedClass.Add( 1, 2 ) = {result}" );
-			Console.WriteLine( $"CppManagedClass.Add( 1, 2 ) = {result}" );
 		}
 		private static void CallTestCs()
 		{
 			Trace.WriteLine( "CallTestCs()" );
-			Console.WriteLine( "CallTestCs()" );
 			var csClass = new CsClass();
 			Trace.WriteLine( $"CsClass.Name={csClass.Name}" );
-			Console.WriteLine( $"CsClass.Name={csClass.Name}" );
 			Trace.WriteLine( $"CsClass.IntPtrSize={csClass.IntPtrSize}" );
-			Console.WriteLine( $"CsClass.IntPtrSize={csClass.IntPtrSize}" );
 		}
+		
 	}
 }

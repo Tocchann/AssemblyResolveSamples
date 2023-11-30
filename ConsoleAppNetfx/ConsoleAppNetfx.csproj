@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ConsoleAppCore\CoreOnly.cs">
+      <Link>CoreOnly.cs</Link>
+    </Compile>
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,13 +64,17 @@
     <ProjectReference Include="..\CppCliDll\CppCliDll.vcxproj">
       <Project>{011dc5c4-7dae-4980-af61-cc76d382cfa0}</Project>
       <Name>CppCliDll</Name>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CsDll\CsDll.csproj">
       <Project>{4e224abd-f53a-43cf-bc2a-54945c4b51fc}</Project>
       <Name>CsDll</Name>
-      <Private>True</Private>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY $(SolutionDir)\bin\$(Configuration)\*.dll $(OutDir) /F /D /Y
+XCOPY $(SolutionDir)\bin\$(Configuration)\*.pdb $(OutDir) /F /D  /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
