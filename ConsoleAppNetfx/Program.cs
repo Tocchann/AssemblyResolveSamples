@@ -19,6 +19,7 @@ namespace ConsoleApp
 
 			Trace.WriteLine( Directory.GetCurrentDirectory() );
 
+#if ENABLE_ASSEMBLY_RESOLVE
 			using( var loader = new AssemblyResolveLoader() )
 			{
 				Trace.WriteLine( "Before CallTest()" );
@@ -30,6 +31,7 @@ namespace ConsoleApp
 				Trace.WriteLine( "Before CallTestCs()" );
 				CallTestCs();
 			}
+#endif // ENABLE_ASSEMBLY_RESOLVE
 			CallTestCppDll();
 			ConsoleAppCore.CoreOnly.CoreOnlyMethod();
 		}

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppNetfx", "ConsoleAppNetfx\ConsoleAppNetfx.csproj", "{B872C995-BE93-4BB7-8BD2-3F866721ED97}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4637011A-D349-41B9-8205-00AE669F0C71} = {4637011A-D349-41B9-8205-00AE669F0C71}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyResolveLoader", "AssemblyResolveLoader\AssemblyResolveLoader.csproj", "{C5776975-3F0F-4EBE-B69E-9073DB0D6F28}"
 EndProject

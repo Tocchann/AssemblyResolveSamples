@@ -16,16 +16,17 @@ namespace ConsoleApp
 		}
 		public static int GetMaxValue( int left, int right )
 		{
+			Trace.WriteLine( $"Called GetMaxValue()" );
 			int result = 0;
 			switch( RuntimeInformation.ProcessArchitecture )
 			{
 			case Architecture.X86:
 				result = GetMaxValue32( left, right );
-				Trace.WriteLine( $"Called GetMaxValue32( {left}, {right} ):{result}" );
+				Trace.WriteLine( $"Return GetMaxValue32( {left}, {right} ):{result}" );
 				break;
 			case Architecture.X64:
 				result = GetMaxValue64( left, right );
-				Trace.WriteLine( $"Called GetMaxValue64( {left}, {right} ):{result}" );
+				Trace.WriteLine( $"Return GetMaxValue64( {left}, {right} ):{result}" );
 				break;
 			default: throw new NotSupportedException();
 			}
