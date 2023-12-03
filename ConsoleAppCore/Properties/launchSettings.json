@@ -2,7 +2,8 @@
   "profiles": {
     "ConsoleAppCore": {
       "commandName": "Project",
-      "workingDirectory": "$(SolutionDir)"
+      "workingDirectory": "$(SolutionDir)",
+      "nativeDebugging": true
     }
   }
 }
