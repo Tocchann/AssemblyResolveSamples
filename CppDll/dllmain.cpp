@@ -6,7 +6,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
                        LPVOID lpReserved
                      )
 {
-    
     const wchar_t* pszReasonName=nullptr;
     switch (ul_reason_for_call)
     {

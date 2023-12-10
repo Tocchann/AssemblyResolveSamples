@@ -33,7 +33,12 @@ namespace ConsoleApp
 			}
 #endif // ENABLE_ASSEMBLY_RESOLVE
 			CallTestCppDll();
+
+			DynamicLoad.CallTestDynamicLoad();
+
 			ConsoleAppCore.CoreOnly.CoreOnlyMethod();
+
+			DynamicLoad.CallTestDynamicLoad();
 		}
 
 		private static void CallTestCppDll()

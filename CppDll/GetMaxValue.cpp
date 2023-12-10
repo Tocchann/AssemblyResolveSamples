@@ -1,20 +1,11 @@
 // Native C++ ÇÃä÷êîÇåƒÇ—èoÇ∑
 #include "pch.h"
 
-#ifdef _M_X64
-EXTERN_C __declspec(dllexport) int APIENTRY GetMaxValue64( int left, int right )
-#else
-EXTERN_C __declspec(dllexport) int APIENTRY GetMaxValue32( int left, int right )
-#endif
+EXTERN_C int APIENTRY GetMaxValue( int left, int right )
 {
-#if _M_X64
-	const wchar_t* msg = L"Called GetMaxValue64()\n";
-#else
-	const wchar_t* msg = L"Called GetMaxValue32()\n";
-#endif
+	const wchar_t* msg = L"Called GetMaxValue()\n";
 	OutputDebugString( msg );
 	std::wcout << msg;
 
 	return left > right ? left : right;
 }
-

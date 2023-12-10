@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssemblyResolveLoader", "AssemblyResolveLoader\AssemblyResolveLoader.csproj", "{A0E4A793-6F28-4226-A635-766381DE147B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppCore", "ConsoleAppCore\ConsoleAppCore.csproj", "{7A6A58A5-C35F-49DA-9A5D-CEC0D36CE779}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4637011A-D349-41B9-8205-00AE669F0C71} = {4637011A-D349-41B9-8205-00AE669F0C71}
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC} = {F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{717DE630-871D-40D0-8BE5-530BBDDEED52}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,6 +21,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsDllCore", "CsDllCore\CsDllCore.csproj", "{535E5E89-F11C-445E-BF7C-32650E8BD592}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppDll", "CppDll\CppDll.vcxproj", "{4637011A-D349-41B9-8205-00AE669F0C71}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppNativeDll", "CppNativeDll\CppNativeDll.vcxproj", "{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,6 +138,26 @@ Global
 		{4637011A-D349-41B9-8205-00AE669F0C71}.Release|x64.Build.0 = Release|x64
 		{4637011A-D349-41B9-8205-00AE669F0C71}.Release|x86.ActiveCfg = Release|Win32
 		{4637011A-D349-41B9-8205-00AE669F0C71}.Release|x86.Build.0 = Release|Win32
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|Any CPU.Build.0 = Debug|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|ARM.ActiveCfg = Debug|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|ARM.Build.0 = Debug|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|ARM64.ActiveCfg = Debug|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|ARM64.Build.0 = Debug|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|x64.ActiveCfg = Debug|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|x64.Build.0 = Debug|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|x86.ActiveCfg = Debug|Win32
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Debug|x86.Build.0 = Debug|Win32
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|Any CPU.ActiveCfg = Release|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|Any CPU.Build.0 = Release|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|ARM.ActiveCfg = Release|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|ARM.Build.0 = Release|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|ARM64.ActiveCfg = Release|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|ARM64.Build.0 = Release|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|x64.ActiveCfg = Release|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|x64.Build.0 = Release|x64
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|x86.ActiveCfg = Release|Win32
+		{F65E4B12-C5F0-40EE-A47E-950C9E82D3DC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

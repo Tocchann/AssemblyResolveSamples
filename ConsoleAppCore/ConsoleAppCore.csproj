@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\ConsoleAppNetfx\DynamicLoad.cs" Link="DynamicLoad.cs" />
     <Compile Include="..\ConsoleAppNetfx\NativeMethods.cs" Link="NativeMethods.cs" />
     <Compile Include="..\ConsoleAppNetfx\Program.cs" Link="Program.cs" />
   </ItemGroup>
