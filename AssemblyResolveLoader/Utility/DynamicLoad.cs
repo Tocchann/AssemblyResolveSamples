@@ -18,7 +18,7 @@ public class DynamicLoad
 	{
 		GetMaxValueDelegate? getMaxValue = default;
 
-		// static コンストラクタで実行してしまえば、P/Invoke と同様(解放できなくなるが)
+		// 呼び出しごとにロードするのではなく事前に解決しておくほうが効率的に動かせる
 		//////
 		var moduleName = RuntimeInformation.ProcessArchitecture switch
 		{
@@ -30,12 +30,19 @@ public class DynamicLoad
 		var hModule = LoadLibrary( moduleName );
 		if( hModule == IntPtr.Zero )
 		{
-			throw new DllNotFoundException( moduleName );
+			switch( Marshal.GetLastWin32Error() )
+			{
+			case 193: // == ERROR_BAD_EXE_FORMAT
+				throw new BadImageFormatException( $"ModuleName={moduleName}, Win32Error={Marshal.GetLastWin32Error()}" );
+			//case 126: // == ERROR_MOD_NOT_FOUND
+			default:
+				throw new DllNotFoundException( $"ModuleName={moduleName}, Win32Error={Marshal.GetLastWin32Error()}" );
+			}
 		}
 		var proc = GetProcAddress( hModule, "GetMaxValue" );
 		if( proc == IntPtr.Zero )
 		{
-			throw new EntryPointNotFoundException( "GetMaxValue" );
+			throw new EntryPointNotFoundException( $"EntryName=GetMaxValue, Win32Error={Marshal.GetLastWin32Error()}" );
 		}
 		getMaxValue = Marshal.GetDelegateForFunctionPointer<GetMaxValueDelegate>( proc );
 		//////

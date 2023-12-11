@@ -40,7 +40,7 @@ namespace ConsoleApp
 
 		private static void CallTestCppDll()
 		{
-			Trace.WriteLine( "CallTestCppDll()" );
+			Trace.WriteLine( "inside CallTestCppDll()" );
 			var result = NativeMethods.GetMaxValue( 10, 20 );
 			Trace.WriteLine( $"NativeMethods.GetMaxValue( 10, 20 )={result}" );
 		}
