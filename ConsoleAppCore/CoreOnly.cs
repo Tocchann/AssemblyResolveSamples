@@ -43,7 +43,7 @@ namespace ConsoleAppCore
 				Architecture.X64 => "x64",
 				Architecture.Arm64 => "ARM64",
 				Architecture.Arm => "ARM",
-				_ => throw new PlatformNotSupportedException( $"Unknown ProcessArchitecture({RuntimeInformation.ProcessArchitecture})" ),
+				_ => throw new PlatformNotSupportedException( $"{RuntimeInformation.ProcessArchitecture} is Not Supported." ),
 			};
 			var targetPath = Path.Combine( appendDir, libraryName );
 			Trace.WriteLine( $"NativeLibrary.Load( {targetPath} )" );

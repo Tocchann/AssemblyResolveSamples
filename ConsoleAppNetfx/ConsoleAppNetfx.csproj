@@ -49,8 +49,6 @@
     <Compile Include="..\ConsoleAppCore\CoreOnly.cs">
       <Link>CoreOnly.cs</Link>
     </Compile>
-    <Compile Include="DynamicLoad.cs" />
-    <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

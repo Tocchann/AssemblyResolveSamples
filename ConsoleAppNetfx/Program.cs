@@ -1,12 +1,9 @@
-﻿using CppCliDll;
+﻿//#define ENABLE_ASSEMBLY_RESOLVE
+using CppCliDll;
 using CsDll;
 using DotNetLab.Utility;
-using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace ConsoleApp
 {
@@ -32,9 +29,9 @@ namespace ConsoleApp
 				CallTestCs();
 			}
 #endif // ENABLE_ASSEMBLY_RESOLVE
-			CallTestCppDll();
-
 			DynamicLoad.CallTestDynamicLoad();
+
+			CallTestCppDll();
 
 			ConsoleAppCore.CoreOnly.CoreOnlyMethod();
 
