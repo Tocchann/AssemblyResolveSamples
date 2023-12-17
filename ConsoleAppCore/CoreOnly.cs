@@ -33,6 +33,10 @@ namespace ConsoleAppCore
 			var minValue = GetMinValue( 10, 20 );
 			Trace.WriteLine( $"GetMinValue(10,20)={minValue}" );
 		}
+		[DllImport( "CppNativeDll.dll" )]
+		static extern int GetMinValue( int left, int right );
+
+
 #if NET
 		private static IntPtr DllImportResolver( string libraryName, Assembly assembly, DllImportSearchPath? searchPath )
 		{
@@ -85,7 +89,5 @@ namespace ConsoleAppCore
 		//[DllImport( "kernel32", SetLastError = true )]
 		//private static extern bool FreeLibrary( IntPtr hLibModule );
 #endif
-		[DllImport( "CppNativeDll.dll" )]
-		static extern int GetMinValue( int left, int right );
 	}
 }
